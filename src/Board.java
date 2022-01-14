@@ -48,4 +48,25 @@ public class Board {
             board[currentRow(column) - 1][column - 1] = ' ';
         }
     }
+    	
+	public void printBoard() {
+		for(int i = NUM_OF_ROW-1; i >= 0; i--) {
+			System.out.println();
+			System.out.print("|");	
+			for(int j = 0; j < NUM_OF_COLUMNS; j++) {
+				System.out.print(" "+board[i][j]+" |");
+			}
+			System.out.println("");
+		}
+	}
+	
+	
+	public void reset() {
+		for(int i=0; i < NUM_OF_ROW; i++) {
+			for(int j=0; j < NUM_OF_COLUMNS; j++) {
+				board[i][j] = ' ';
+			}
+		}
+	}
+    
 }
