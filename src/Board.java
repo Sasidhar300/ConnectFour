@@ -35,6 +35,35 @@ public class Board {
 		}
 		return currentRow;
 	}
+	
+	/* 
+	 * Checks the board array for any other character other than the symbol of 
+	 * the current player and empty space (' ').
+	 * This method is implemented while assuming that none of the player will 
+	 * have ' ' (empty space) as a symbol. 
+	 */
+	public char getOtherPlayerSymbol(char symbol) {
+		for (int i = 0; i < NUM_OF_ROW; i++) {
+			for (int j = 0; j < NUM_OF_COLUMNS; j++) {
+				if (board[i][j] != symbol && board[i][j] != ' ' ) {
+					return board[i][j];
+				}
+			}
+		}
+		return ' '; 
+	}
+	
+	/* 
+	 * This method is used for the defensive move in AIPlayer. 
+	 * It removes a piece from the board by replacing the symbol with ' '.
+	 */
+	public void rollbackMove(int column) {
+		if(currentRow(column) == 0) {
+			board[currentRow(column)][column-1] = ' ';
+		}else {
+			board[currentRow(column)-1][column-1] = ' ';
+		}
+	}
 
 	public void printBoard() {
 		for (int i = NUM_OF_ROW - 1; i >= 0; i--) {
