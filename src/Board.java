@@ -64,6 +64,81 @@ public class Board {
 			board[currentRow(column)-1][column-1] = ' ';
 		}
 	}
+	
+		public boolean containsWin() {
+		boolean containsWin = false;
+		// Checking rows
+		for(int i = 0; i < NUM_OF_ROW; i++) {
+			for(int j = 0; j < NUM_OF_COLUMNS - 2 - 1; j++) {
+				if ((board[i][j] != ' ')
+						&& (board[i][j] == board[i][j+1])
+						&& (board[i][j+2] == board[i][j+3])
+						&& (board[i][j+1] == board[i][j+2])) {
+					containsWin = true;
+				}
+			}
+		}
+		// Checking columns 
+		if (!containsWin) {
+			for(int j = 0; j < NUM_OF_COLUMNS; j++) {
+				for(int i = 0; i < NUM_OF_ROW - 2 - 1; i++) {
+					if ((board[i][j] != ' ')
+							&& (board[i][j] == board[i+1][j])
+							&& (board[i+2][j] == board[i+3][j])
+							&& (board[i+1][j] == board[i+2][j])) {
+						containsWin = true;
+
+					}
+				}
+			}
+		}
+		//Checking forward diagonal
+		if (!containsWin) {
+			for(int i = 0; i < NUM_OF_ROW - 2 - 1; i++) {
+				for(int j = 0; j < NUM_OF_COLUMNS - 2 - 1; j++) {
+					if ((board[i][j] != ' ')
+							&& (board[i][j] == board[i+1][j+1])
+							&& (board[i+2][j+2] == board[i+3][j+3])
+							&& (board[i+1][j+1] == board[i+2][j+2])) {
+						containsWin = true;
+					}
+				}
+			}
+		}
+		//Checking backward diagonal
+		if (!containsWin) {
+			for(int i = 5; i > NUM_OF_ROW - 3 - 1; i--) {
+				for(int j = 0; j < NUM_OF_COLUMNS - 2 - 1; j++) {
+					if ((board[i][j] != ' ')
+							&& (board[i][j] == board[i-1][j+1])
+							&& (board[i-2][j+2] == board[i-3][j+3])
+							&& (board[i-1][j+1] == board[i-2][j+2])) {
+						containsWin = true;
+					}
+				}
+			}
+		}
+
+		return containsWin;
+	}
+	
+	public boolean isTie() {
+		boolean isTie = true;
+		for(int j = 0; j < NUM_OF_COLUMNS; j++) {
+			if(board[NUM_OF_ROW-1][j] == ' ' && !containsWin()) {
+				isTie = false;
+			}
+		}
+		return isTie;
+	}
+	
+	public int getNUM_OF_COLUMNS() {
+		return NUM_OF_COLUMNS;
+	}
+	
+	public int getNUM_OF_ROW() {
+		return NUM_OF_ROW;
+	}
 
 	public void printBoard() {
 		for (int i = NUM_OF_ROW - 1; i >= 0; i--) {
