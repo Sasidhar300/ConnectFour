@@ -45,5 +45,89 @@ public class AIPlayer extends Player {
 					}
 				}
 			}
-    }
+
+			/*
+			 * Defensive Move: Gets the symbol of the other player using
+			 * (board.getOtherPlayerSymbol()) and places it in all of the space characters
+			 * on the board and checks for a winning move. If a winning move is present then
+			 * the AI makes the same move to block the opponent player
+			 */
+			char otherPlayerSymbol = board.getOtherPlayerSymbol(symbol);
+			if (!board.containsWin() && (madeMove == false)) {
+				for (int i = 1; i <= board.getNUM_OF_COLUMNS(); i++) {
+					if (board.insert(i, otherPlayerSymbol)) {
+						if (board.containsWin()) {
+							board.rollbackMove(i);
+							board.insert(i, symbol);
+							madeMove = true;
+							System.out.print(this.name + " made a move: " + i);
+							break;
+						} else {
+							board.rollbackMove(i);
+						}
+					}
+				}
+			}
+
+			/*
+			 * If there isn't a winning move or a defensive move then the AI will place a
+			 * piece(symbol) at a random place on the board by making use of the random
+			 * library.
+			 */
+			if (!board.containsWin() && madeMove == false) {
+				Random random = new Random();
+				int move = random.nextInt(board.getNUM_OF_COLUMNS()) + 1;
+				while (!board.insert(move, symbol)) {
+					move = random.nextInt(board.getNUM_OF_COLUMNS()) + 1;
+				}
+				System.out.print(this.name + " made a move: " + move);
+			}
+		} else {
+
+			/*
+			 * If the symbol of the AI is not *space character (' ')* then only this block
+			 * of code runs
+			 */
+			boolean madeMove = false;
+			for (int i = 1; i <= board.getNUM_OF_COLUMNS(); i++) {
+				if (board.insert(i, symbol)) {
+					if (board.containsWin()) {
+						madeMove = true;
+						System.out.print(this.name + " made a move: " + i);
+						break;
+					} else {
+						board.rollbackMove(i);
+					}
+				}
+			}
+
+			char otherPlayerSymbol = board.getOtherPlayerSymbol(symbol);
+			if (!board.containsWin() && (madeMove == false)) {
+				for (int i = 1; i <= board.getNUM_OF_COLUMNS(); i++) {
+					if (board.insert(i, otherPlayerSymbol)) {
+						if (board.containsWin()) {
+							board.rollbackMove(i);
+							board.insert(i, symbol);
+							madeMove = true;
+							System.out.print(this.name + " made a move: " + i);
+							break;
+						} else {
+							board.rollbackMove(i);
+						}
+					}
+				}
+			}
+
+			if (!board.containsWin() && madeMove == false) {
+				Random random = new Random();
+				int move = random.nextInt(board.getNUM_OF_COLUMNS()) + 1;
+				while (!board.insert(move, symbol)) {
+					move = random.nextInt(board.getNUM_OF_COLUMNS()) + 1;
+				}
+				System.out.print(this.name + " made a move: " + move);
+			}
+		}
+
+	}
+
 }
